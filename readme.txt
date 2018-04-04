@@ -14,4 +14,4 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
 = How do I add a tooltip (new, easy way)? =
-  [wp-tooltip content="your tooltip content here" 		     key="your specific keyword"]
+  [wp-tooltip id="your post id here ex. 7"]

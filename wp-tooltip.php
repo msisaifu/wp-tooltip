@@ -77,31 +77,35 @@ class WpTooltip{
         register_post_type( 'wp_tooltip', $post_type_agr );
     }
     function enqueue(){
-//        wp_enqueue_style( 'bootstrap_css', 'http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css' );
         wp_enqueue_style( 'bootstrap_css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' );
         wp_deregister_script( 'jquery' );
         wp_enqueue_script( 'jquery' ,'https://code.jquery.com/jquery-3.2.1.slim.min.js');
 
         wp_enqueue_script('jquery-p-js',"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js");
         wp_enqueue_script('jquery_ui',"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js");
-
-//        wp_enqueue_script('jquery',"https://code.jquery.com/jquery-1.12.4.js");
-//        wp_enqueue_script('jquery_ui',"https://code.jquery.com/ui/1.12.1/jquery-ui.js",'','',false);
         add_action('wp_footer', array($this,'tootipScript'));
+        add_action('wp_head', array($this,'tootipStyle'));
     }
     function tootipScript(){
        echo "
             <script>
                   $(function () {
                      $('[data-toggle=\"tooltip\"]').tooltip({
-//                     animation:true,
-//                     delay: { 'show': 500, 'hide': 100 },
-                     placement:'left',
-                     track: true
-//                      position: { my: 'left+15', at: 'right' }
+                     placement:'top',
+                     track: true                     
                      })
                   })
             </script>
+       ";
+    }
+    function tootipStyle(){
+        echo "
+            <style>
+                 .wp-tooltip{
+                    text-decoration: underline #1f649f;
+                    
+                 }
+            </style>
        ";
     }
     function tooltip($atts){
@@ -110,11 +114,11 @@ class WpTooltip{
         ), $atts );
         extract($a);
 
-        $post_7 = get_post( (int)$id);
-        $title = $post_7->post_title;
-        $content=$post_7->post_content;
+        $post = get_post( (int)$id);
+        $title = $post->post_title;
+        $content=$post->post_content;
 
-        $data="<span data-toggle='tooltip' title='$content'> $title </span>";
+        $data="<span class='wp-tooltip' data-toggle='tooltip' title='$content'> $title </span>";
         return $data;
     }
 }
