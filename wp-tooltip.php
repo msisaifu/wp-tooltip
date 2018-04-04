@@ -106,11 +106,15 @@ class WpTooltip{
     }
     function tooltip($atts){
         $a = shortcode_atts( array(
-            'content' => '',
-            'key' => '',
+            'id'=>'',
         ), $atts );
         extract($a);
-        $data="<span data-toggle='tooltip' title='$content'> $key </span>";
+
+        $post_7 = get_post( (int)$id);
+        $title = $post_7->post_title;
+        $content=$post_7->post_content;
+
+        $data="<span data-toggle='tooltip' title='$content'> $title </span>";
         return $data;
     }
 }
